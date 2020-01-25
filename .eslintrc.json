@@ -1,0 +1,22 @@
+{
+  "extends": "standard",
+  "rules": {
+    "newline-per-chained-call": [ "error", {
+      "ignoreChainWithDepth": 2
+    }],
+    "operator-linebreak": [ "error", "before" ],
+    "multiline-ternary": [ "error", "always" ],
+    "comma-dangle": [ "error", {
+      "arrays": "always-multiline",
+      "exports": "only-multiline",
+      "functions": "never",
+      "imports": "only-multiline",
+      "objects": "always-multiline"
+    }],
+    "sort-keys": [ "error", "asc", {
+      "caseSensitive": true,
+      "natural": true
+    }],
+    "semi": [ "error", "always" ]
+  }
+}
