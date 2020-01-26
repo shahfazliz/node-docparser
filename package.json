@@ -5,8 +5,9 @@
   "private": true,
   "main": "index.js",
   "scripts": {
+    "build": "webpack",
     "eslint": "./node_modules/eslint/bin/eslint.js --fix --config .eslintrc.json ./src/*",
-    "build": "webpack"
+    "start": "node ./dist/main.js"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   "homepage": "https://github.com/shahfazliz/node-docparser#readme",
   "dependencies": {
     "docparser-node": "^1.2.2",
+    "firebase": "^7.7.0",
     "moment": "^2.24.0"
   },
   "devDependencies": {
