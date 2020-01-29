@@ -5,15 +5,17 @@ import AssignDeep from './utils/AssignDeep';
 const parser = new DocumentParser({ DOCPARSERKEY: '98a2d8daa74408f022f4f764b37ae207f61c84b5' });
 
 const availableCommands = {
+  // eg: npm start -- --get-all-parsed-documents --report-type "Maybank Daily Booking Report"
   '--get-all-parsed-documents': {
     callback: getAllParsedDocuments,
-  },
-  '--get-parsed-document': {
-    callback: getParsedDocument,
     params: {
       '--report-type': () => ({ reportType: getValueOfCommand('--report-type') }),
     },
   },
+  '--get-parsed-document': {
+    callback: getParsedDocument,
+  },
+  // eg: npm start -- --upload-file --report-type "Maybank Daily Booking Report" --file-path ./maybank.pdf
   '--upload-file': {
     callback: uploadFile,
     params: {
@@ -43,9 +45,11 @@ availableCommands[theCommand].callback(getRequiredValues(
 );
 
 function getRequiredValues (params) {
-  return AssignDeep(...Object
-    .keys(params)
-    .map(requiredParam => params[requiredParam]()));
+  return AssignDeep(
+    ...Object
+      .keys(params)
+      .map(requiredParam => params[requiredParam]())
+  );
 }
 
 function getAllParsedDocuments ({ reportType }) {

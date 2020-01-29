@@ -5,7 +5,7 @@
  * @param {Object} [sourceObject] - The object we want to assign from
  * @returns {Object}
  */
-export default function AssignDeep (targetObject, sourceObject) {
+export default function AssignDeep (targetObject = {}, sourceObject = {}) {
   // Copy the targetObject into a temporary result
   const result = { ...targetObject };
 
