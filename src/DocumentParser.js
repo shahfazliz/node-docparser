@@ -41,6 +41,9 @@ export class DocumentParser {
     this.parserId = parserId;
     this.remoteId = remoteId;
 
+    console.log(parserId);
+    console.log(singleFilePath);
+
     this
       .client
       .uploadFileByPath(

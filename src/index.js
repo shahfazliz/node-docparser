@@ -2,6 +2,8 @@ import { ParserIds, DocumentParser } from './DocumentParser';
 import { startOfDayInUTC } from './utils/DateTime';
 import AssignDeep from './utils/AssignDeep';
 
+const parser = new DocumentParser({ DOCPARSERKEY: '98a2d8daa74408f022f4f764b37ae207f61c84b5' });
+
 const availableCommands = {
   '--get-all-parsed-documents': {
     callback: getAllParsedDocuments,
@@ -9,14 +11,14 @@ const availableCommands = {
   '--get-parsed-document': {
     callback: getParsedDocument,
     params: {
-      '--report-type': () => {},
+      '--report-type': () => ({ reportType: getValueOfCommand('--report-type') }),
     },
   },
   '--upload-file': {
     callback: uploadFile,
     params: {
-      '--file-path': () => {},
-      '--report-type': () => {},
+      '--file-path': () => ({ filePath: getValueOfCommand('--file-path') }),
+      '--report-type': () => ({ reportType: getValueOfCommand('--report-type') }),
     },
   },
 };
@@ -36,8 +38,8 @@ const theCommand = Object
   .keys(availableCommands)
   .find(command => enteredCommands.indexOf(command) > -1);
 
-enteredCommands[theCommand].callback(getRequiredValues(
-  enteredCommands[theCommand].params)
+availableCommands[theCommand].callback(getRequiredValues(
+  availableCommands[theCommand].params)
 );
 
 function getRequiredValues (params) {
@@ -45,8 +47,6 @@ function getRequiredValues (params) {
     .keys(params)
     .map(requiredParam => params[requiredParam]()));
 }
-
-const parser = new DocumentParser({ DOCPARSERKEY: process.env.DOCPARSERKEY });
 
 function getAllParsedDocuments ({ reportType }) {
   parser.getAllParsedDocuments({
@@ -68,4 +68,10 @@ function uploadFile ({ filePath, reportType }) {
     singleFilePath: filePath,
     successCallback: console.log,
   });
+}
+
+function getValueOfCommand (command) {
+  return process.argv[process
+    .argv
+    .indexOf(command) + 1];
 }
